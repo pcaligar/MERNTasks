@@ -1,23 +1,39 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AlertContext from "../../context/alert/alertContext";
+import AuthContext from "../../context/authentication/authContext";
 
-const NuevaCuenta = () => {
+const NuevaCuenta = (props) => {
   //CONTEXT
   const alertContext = useContext(AlertContext);
   const { alert, showAlert } = alertContext;
 
+  const authContext = useContext(AuthContext);
+  const { authenticated, message, registerUser } = authContext;
+
+  //USE_EFFECT
+  //Waching if the user was registered, authenticated or we have a duplicate registry
+  useEffect(() => {
+    console.log(message);
+    if (authenticated) {
+      props.history.push("/projects");
+    }
+
+    if (message) {
+      showAlert(message.msg, message.category);
+    }
+  }, [message, authenticated, props.history]); //We have access to  props.history because we are using react touter dom
+
   //STATES
-  /*iniciar sesion*/
   const [usuario, handleUsuario] = useState({
-    nombre: "",
+    name: "",
     email: "",
     password: "",
-    confirmar: "",
+    confirmation: "",
   });
 
   //VARIABLES
-  const { nombre, email, password, confirmar } = usuario;
+  const { name, email, password, confirmation } = usuario;
 
   //FUNCTIONS
   const handleOnCahnge = (e) => {
@@ -32,10 +48,10 @@ const NuevaCuenta = () => {
 
     //Validations
     if (
-      nombre.trim() === "" ||
+      name.trim() === "" ||
       email.trim() === "" ||
       password.trim() === "" ||
-      confirmar.trim() === ""
+      confirmation.trim() === ""
     ) {
       showAlert("All fields are required", "alerta-error");
       return;
@@ -49,12 +65,17 @@ const NuevaCuenta = () => {
       return;
     }
 
-    if (password !== confirmar) {
+    if (password !== confirmation) {
       showAlert("The password and confirmation are not equal", "alerta-error");
       return;
     }
 
     //Pasarlo al action
+    registerUser({
+      name,
+      email,
+      password,
+    });
   };
 
   return (
@@ -66,11 +87,11 @@ const NuevaCuenta = () => {
         <h1>Get an account</h1>
         <form onSubmit={handleSubmitForm}>
           <div className="campo-form">
-            <label htmlFor="nombre">Name</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
-              name="nombre"
-              value={nombre}
+              name="name"
+              value={name}
               placeholder="your name"
               onChange={handleOnCahnge}
             />
@@ -96,11 +117,11 @@ const NuevaCuenta = () => {
             />
           </div>
           <div className="campo-form">
-            <label htmlFor="confirmar">Confirm Password</label>
+            <label htmlFor="confirmation">Confirm Password</label>
             <input
               type="password"
-              name="confirmar"
-              value={confirmar}
+              name="confirmation"
+              value={confirmation}
               placeholder="Repeat your Password"
               onChange={handleOnCahnge}
             />
@@ -114,7 +135,7 @@ const NuevaCuenta = () => {
           </div>
         </form>
         <Link to={"/"} className="enlace-cuenta">
-          Sign In
+          Log In
         </Link>
       </div>
     </div>
