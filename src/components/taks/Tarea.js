@@ -3,10 +3,10 @@ import React, { useContext } from "react";
 import proyectoContext from "../../context/proyectos/proyectoContext";
 import taskContext from "../../context/tasks/taskContext";
 
-const Tarea = ({ tarea }) => {
+const Tarea = ({ task }) => {
   //USE_CONTEXT
   const proyectosContext = useContext(proyectoContext);
-  const { proyecto } = proyectosContext;
+  const { project } = proyectosContext;
 
   const tasksContext = useContext(taskContext);
   const {
@@ -17,35 +17,35 @@ const Tarea = ({ tarea }) => {
   } = tasksContext;
 
   //DESTRUCTURING
-  const [poyectoActual] = proyecto;
+  const [currentProject] = project;
 
   //FUNCTIONS
   const handleOnClickDeleteTask = () => {
-    deleteTask(tarea.id);
-    getTasks(poyectoActual.id);
+    deleteTask(task.id);
+    getTasks(currentProject.id);
   };
 
   const handleOnClickChangeState = () => {
-    tarea.estado = !tarea.estado;
-    console.log(tarea.estado);
-    changeStateTask(tarea);
+    task.estado = !task.estado;
+    console.log(task.estado);
+    changeStateTask(task);
   };
 
   const handleOnclickEditButton = () => {
-    getCurrentTask(tarea);
+    getCurrentTask(task);
   };
 
   return (
     <li className="tarea sombra">
-      <p>{tarea.nombre}</p>
+      <p>{task.nombre}</p>
       <div className="estado">
-        {tarea.estado ? (
+        {task.estado ? (
           <button
             type="button"
             className="completo"
             onClick={handleOnClickChangeState}
           >
-            Completo
+            Complete
           </button>
         ) : (
           <button
@@ -53,7 +53,7 @@ const Tarea = ({ tarea }) => {
             className="incompleto"
             onClick={handleOnClickChangeState}
           >
-            Incompleto
+            Incomplete
           </button>
         )}
       </div>
@@ -63,14 +63,14 @@ const Tarea = ({ tarea }) => {
           className="btn btn-primario"
           onClick={handleOnclickEditButton}
         >
-          Editar
+          Edit
         </button>
         <button
           type="button"
           className="btn btn-secundario"
           onClick={handleOnClickDeleteTask}
         >
-          Eliminar
+          Delete
         </button>
       </div>
     </li>

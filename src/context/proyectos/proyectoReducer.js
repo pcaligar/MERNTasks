@@ -1,41 +1,47 @@
 //Types
 import {
-  FORMULARIO_PROYECTO,
-  OBTENER_PROYECTOS,
-  AGREGAR_PROYECTO,
-  VALIDAR_FORMULARIO,
-  PROYECTO_ACTUAL,
-  ELIMINAR_PROYECTO,
+  FORM_PROJECT,
+  GET_PROJECTS,
+  ADD_PROJECT,
+  VALIDATE_FORM,
+  CURRENT_PROJECT,
+  DELETE_PROJECT,
+  ERROR_PROJECT,
 } from "../../types/typesProject";
 
 export default (state, action) => {
   switch (action.type) {
-    case FORMULARIO_PROYECTO:
-      return { ...state, formulario: true };
-    case OBTENER_PROYECTOS:
-      return { ...state, proyectos: action.payload };
-    case AGREGAR_PROYECTO:
+    case FORM_PROJECT:
+      return { ...state, form: true };
+    case GET_PROJECTS:
+      return { ...state, projects: action.payload };
+    case ADD_PROJECT:
       return {
         ...state,
-        proyectos: [...state.proyectos, action.payload],
-        formulario: false,
-        errorFormulario: false,
+        projects: [...state.projects, action.payload],
+        form: false,
+        errorForm: false,
       };
-    case VALIDAR_FORMULARIO:
+    case VALIDATE_FORM:
       return {
         ...state,
-        errorFormulario: true,
+        errorForm: true,
       };
-    case PROYECTO_ACTUAL:
+    case CURRENT_PROJECT:
       return {
         ...state,
-        proyecto: state.proyectos.filter((pro) => pro.id === action.payload),
+        project: state.projects.filter((pro) => pro._id === action.payload),
       };
-    case ELIMINAR_PROYECTO:
+    case DELETE_PROJECT:
       return {
         ...state,
-        proyectos: state.proyectos.filter((pro) => pro.id !== action.payload),
-        proyecto: null,
+        projects: state.projects.filter((pro) => pro._id !== action.payload),
+        project: null,
+      };
+    case ERROR_PROJECT:
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return state;

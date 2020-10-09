@@ -23,7 +23,7 @@ const Header = () => {
     <header className="app-header">
       {user ? (
         <p className="nombre-usuario">
-          Hola<span> {user.name}</span>
+          Hi<span> {user.name}</span>
         </p>
       ) : null}
 

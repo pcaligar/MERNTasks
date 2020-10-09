@@ -28,7 +28,7 @@ const AuthState = (props) => {
   const registerUser = async (data) => {
     try {
       const response = await axiosClient.post("/api/users", data);
-      console.log(response.data);
+      //console.log(response.data);
 
       dispatch({
         type: REGISTERED_SUCCESSFULLY,
@@ -57,7 +57,7 @@ const AuthState = (props) => {
 
     try {
       const response = await axiosClient.get("api/auth");
-      console.log(response.data);
+      //console.log(response.data);
 
       dispatch({
         type: GET_USER,

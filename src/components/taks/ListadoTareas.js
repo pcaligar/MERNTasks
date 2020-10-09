@@ -10,34 +10,34 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 const ListadoTareas = () => {
   //USE_CONTEXT
   const proyectosContext = useContext(proyectoContext);
-  const { proyecto, eliminarProyecto } = proyectosContext;
+  const { project, deleteProject } = proyectosContext;
 
   const tasksContext = useContext(taskContext);
   const { tasksProject } = tasksContext;
 
-  //Si no hay proyecto seleccionado
-  if (!proyecto) return <h2>Selecciona un proyecto</h2>;
+  //There is no project selected
+  if (!project) return <h2>Selects a project</h2>;
 
-  //array destructuring para extraer el proyecto actual
-  const [poyectoActual] = proyecto; //proyecto es un array y el destructuring equivaldria a la posicion 0 del array
+  //array destructuring to get the current project
+  const [currentProject] = project; //project is an array and the destructuring should be the zero position of the array
 
-  const handleOnclickEliminar = () => {
-    eliminarProyecto(poyectoActual.id);
+  const handleOnclickDeleteProject = () => {
+    deleteProject(currentProject._id);
   };
 
   return (
     <Fragment>
-      <h2>Proyecto: {poyectoActual.nombre}</h2>
+      <h2>Project: {currentProject.name}</h2>
       <ul className="Listado-tareas">
         {!tasksProject ? (
           <li className="tarea">
-            <p>No hay tarea</p>
+            <p>There is no task</p>
           </li>
         ) : (
           <TransitionGroup>
-            {tasksProject.map((tarea) => (
-              <CSSTransition key={tarea.id} timeout={350} classNames="tarea">
-                <Tarea tarea={tarea} />
+            {tasksProject.map((task) => (
+              <CSSTransition key={task.id} timeout={350} classNames="tarea">
+                <Tarea task={task} />
               </CSSTransition>
             ))}
           </TransitionGroup>
@@ -46,9 +46,9 @@ const ListadoTareas = () => {
       <button
         type="button"
         className="btn btn-eliminar"
-        onClick={handleOnclickEliminar}
+        onClick={handleOnclickDeleteProject}
       >
-        Eliminar Proyecto &times;
+        Delete Project &times;
       </button>
     </Fragment>
   );

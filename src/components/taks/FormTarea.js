@@ -6,7 +6,7 @@ import taskContext from "../../context/tasks/taskContext";
 const FormTarea = () => {
   //USE_CONTEXT;
   const proyectosContext = useContext(proyectoContext);
-  const { proyecto } = proyectosContext;
+  const { project } = proyectosContext;
 
   const tasksContext = useContext(taskContext);
   const {
@@ -34,9 +34,9 @@ const FormTarea = () => {
   });
 
   //VARIABLES
-  if (!proyecto) return null;
-  //array destructuring para extraer el proyecto actual
-  const [poyectoActual] = proyecto; //proyecto es un array y el destructuring equivaldria a la posicion 0 del array
+  if (!project) return null;
+  //array destructuring to get the current project
+  const [poyectoActual] = project; //project is an array and the destructuring should be the zero position of the array
 
   const { nombre } = task;
 
@@ -97,7 +97,7 @@ const FormTarea = () => {
         </div>
       </form>
       {errorTask ? (
-        <p className="mensaje error">El nombre de la tarea es obligatorio</p>
+        <p className="mensaje error">The name of the task is required</p>
       ) : null}
     </div>
   );

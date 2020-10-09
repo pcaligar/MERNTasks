@@ -3,24 +3,24 @@ import React, { useContext } from "react";
 import proyectoContext from "../../context/proyectos/proyectoContext";
 import taskContext from "../../context/tasks/taskContext";
 
-const Proyecto = ({ proyecto }) => {
+const Proyecto = ({ project }) => {
   //USE_CONTEXT
   const proyectosContext = useContext(proyectoContext);
-  const { proyectoActual } = proyectosContext;
+  const { currentProject } = proyectosContext;
 
   const tasksContext = useContext(taskContext);
   const { getTasks } = tasksContext;
 
   //FUNCTIONS
   const handleOnclick = () => {
-    proyectoActual(proyecto.id);
-    getTasks(proyecto.id);
+    currentProject(project._id);
+    getTasks(project._id);
   };
 
   return (
     <li className="">
       <button type="button" className="btn btn-blank" onClick={handleOnclick}>
-        {proyecto.nombre}
+        {project.name}
       </button>
     </li>
   );
