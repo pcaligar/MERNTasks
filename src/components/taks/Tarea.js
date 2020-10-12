@@ -9,26 +9,21 @@ const Tarea = ({ task }) => {
   const { project } = proyectosContext;
 
   const tasksContext = useContext(taskContext);
-  const {
-    getTasks,
-    deleteTask,
-    changeStateTask,
-    getCurrentTask,
-  } = tasksContext;
+  const { getTasks, deleteTask, updateTask, getCurrentTask } = tasksContext;
 
   //DESTRUCTURING
   const [currentProject] = project;
 
   //FUNCTIONS
   const handleOnClickDeleteTask = () => {
-    deleteTask(task.id);
-    getTasks(currentProject.id);
+    deleteTask(task._id, currentProject._id);
+    getTasks(currentProject._id);
   };
 
   const handleOnClickChangeState = () => {
-    task.estado = !task.estado;
-    console.log(task.estado);
-    changeStateTask(task);
+    task.state = !task.state;
+    console.log(task.state);
+    updateTask(task);
   };
 
   const handleOnclickEditButton = () => {
@@ -37,9 +32,9 @@ const Tarea = ({ task }) => {
 
   return (
     <li className="tarea sombra">
-      <p>{task.nombre}</p>
+      <p>{task.name}</p>
       <div className="estado">
-        {task.estado ? (
+        {task.state ? (
           <button
             type="button"
             className="completo"

@@ -24,27 +24,27 @@ const FormTarea = () => {
     if (taskSelected !== null) {
       setTask(taskSelected);
     } else {
-      setTask({ nombre: "" });
+      setTask({ name: "" });
     }
   }, [taskSelected]);
 
   //USE_STATE
   const [task, setTask] = useState({
-    nombre: "",
+    name: "",
   });
 
   //VARIABLES
   if (!project) return null;
   //array destructuring to get the current project
-  const [poyectoActual] = project; //project is an array and the destructuring should be the zero position of the array
+  const [currentProject] = project; //project is an array and the destructuring should be the zero position of the array
 
-  const { nombre } = task;
+  const { name } = task;
 
   //FUNCTIONS
   const handleOnSubmitTaskForm = (e) => {
     e.preventDefault();
     //Validations
-    if (nombre.trim() === "") {
+    if (name.trim() === "") {
       validarTask();
       return;
     }
@@ -52,8 +52,8 @@ const FormTarea = () => {
     //Check if we are editing a task or adding a new
     if (taskSelected === null) {
       //Add the new task to the tasks state
-      task.proyectoId = poyectoActual.id;
-      task.estado = false;
+      task.project = currentProject._id;
+      //task.state = false; It's no required because in the model task is false by default
       addNewTask(task);
     } else {
       //Update selected task
@@ -62,10 +62,10 @@ const FormTarea = () => {
     }
 
     //Get and filter tasks of the current project
-    getTasks(poyectoActual.id);
+    getTasks(currentProject._id);
 
     //Reset form
-    setTask({ nombre: "" });
+    setTask({ name: "" });
   };
 
   const handleOnChangeTaskForm = (e) => {
@@ -81,17 +81,17 @@ const FormTarea = () => {
         <div className="contenedor-input">
           <input
             type="text"
-            name="nombre"
-            placeholder="Nombre tarea..."
+            name="name"
+            placeholder="task name..."
             className="input-text"
-            value={nombre}
+            value={name}
             onChange={handleOnChangeTaskForm}
           />
         </div>
         <div className="contenedor-input">
           <input
             type="submit"
-            value={taskSelected ? "Editar Tarea" : "Agregar Tarea"}
+            value={taskSelected ? "Edit Task" : "Add Task"}
             className="btn btn-primario btn-submit btn-block"
           />
         </div>
